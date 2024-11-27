@@ -3,3 +3,7 @@ models:
     description: intermetiate model joining customers and location data.
     access: private
     group: finance
+    columns:
+      - name: order_id
+        tests:
+          - unique
