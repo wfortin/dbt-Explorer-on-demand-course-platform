@@ -1,28 +1,19 @@
-with
-
-source as (
-
-    select * from {{ source('jaffle_shop', 'stores') }}
-),
-
-renamed as (
-
-    select
-
-        ----------  ids
-        id as location_id,
-
-        ---------- text
-        name as location_name,
-
-        ---------- numerics
-        tax_rate,
-
-        ---------- timestamps
-        opened_at as location_opened_at
-
-    from source
-
+WITH stores AS (
+  SELECT
+    id,
+    name,
+    opened_at,
+    tax_rate
+  FROM {{ source('jaffle_shop', 'stores') }}
+), formula_1 AS (
+  SELECT
+    *,
+    id AS location_id,
+    name AS location_name,
+    opened_at AS location_opened_at,
+    tax_rate AS tax_rate_renamed
+  FROM stores
 )
-
-select * from renamed
+SELECT
+  *
+FROM formula_1
